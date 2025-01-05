@@ -14,12 +14,22 @@ import {
 import SearchIcon from '@mui/icons-material/Search'
 import Image from 'next/image'
 import Link from 'next/link'
-
-import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { useState, useEffect } from 'react'
 
 export default function Header() {
+  const router = useRouter()
   const [messagesAnchorEl, setMessagesAnchorEl] = useState<null | HTMLElement>(null)
   const [activeTab, setActiveTab] = useState(0)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) {
+    return null // ya da loading state
+  }
 
   // Örnek mesaj verileri
   const messages = [
@@ -183,6 +193,7 @@ export default function Header() {
             <Button
               variant="contained"
               className="bg-[#489ae9] hover:bg-[#3d83c7] normal-case"
+              onClick={() => router.push('/post-ad')}
             >
               Ücretsiz* İlan Ver
             </Button>
