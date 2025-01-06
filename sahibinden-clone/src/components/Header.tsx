@@ -166,6 +166,7 @@ export default function Header() {
                         fullWidth 
                         variant="text" 
                         className="mt-2 text-sm normal-case text-blue-600"
+                        onClick={() => router.push('/messages')}
                       >
                         Tümünü Gör
                       </Button>
