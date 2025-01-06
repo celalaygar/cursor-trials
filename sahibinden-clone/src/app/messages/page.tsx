@@ -5,6 +5,7 @@ import MessagesSidebar from '@/components/MessagesSidebar'
 import ClientProvider from '@/components/ClientProvider'
 import GridViewIcon from '@mui/icons-material/GridView'
 import ListIcon from '@mui/icons-material/List'
+import { messages } from '@/data/messages'
 
 export default function MessagesPage() {
   return (
@@ -85,14 +86,4 @@ export default function MessagesPage() {
       </Box>
     </Box>
   )
-}
-
-const messages = [
-  {
-    id: 1,
-    sender: "Segross Gayrimenkul",
-    message: "Satılık hisseli mülk 4.5 milyon TL.",
-    date: "9 Ağustos 2024 • 22:37"
-  },
-  // ... diğer mesajlar
-] 
+} 

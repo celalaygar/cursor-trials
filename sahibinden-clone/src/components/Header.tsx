@@ -16,6 +16,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
+import { messages } from '@/data/messages'
+import { navigationLinks } from '@/data/navigation'
 
 export default function Header() {
   const router = useRouter()
@@ -30,30 +32,6 @@ export default function Header() {
   if (!mounted) {
     return null // ya da loading state
   }
-
-  // Örnek mesaj verileri
-  const messages = [
-    {
-      sender: "Segross Gayrimenkul",
-      message: "Satılık hisseli mülk 4.5 milyon TL.",
-      date: "9 Ağustos / 22:37"
-    },
-    {
-      sender: "Ömer İ.",
-      message: "Satılık hisseli mülk 4.5 milyon TL.",
-      date: "8 Ağustos / 13:12"
-    },
-    {
-      sender: "Sedat B.",
-      message: "Satılık hisseli mülk 4.5 milyon TL.",
-      date: "28 Temmuz / 10:41"
-    },
-    {
-      sender: "Galip Ü.",
-      message: "Satılık hisseli mülk 4.5 milyon TL.",
-      date: "1 Temmuz / 13:36"
-    }
-  ]
 
   return (
     <Box className="bg-[#32455d] text-white">
@@ -204,30 +182,15 @@ export default function Header() {
         {/* Navigation Bar */}
         <Box className="flex items-center h-10 border-t border-[#455873]">
           <Box className="flex gap-6">
-            <Link href="/real-estate" className="text-white text-sm hover:text-gray-200">
-              Emlak
-            </Link>
-            <Link href="/vehicles" className="text-white text-sm hover:text-gray-200">
-              Vasıta
-            </Link>
-            <Link href="/spare-parts" className="text-white text-sm hover:text-gray-200">
-              Yedek Parça, Aksesuar, Donanım & Tuning
-            </Link>
-            <Link href="/shopping" className="text-white text-sm hover:text-gray-200">
-              İkinci El ve Sıfır Alışveriş
-            </Link>
-            <Link href="/heavy-equipment" className="text-white text-sm hover:text-gray-200">
-              İş Makineleri & Sanayi
-            </Link>
-            <Link href="/services" className="text-white text-sm hover:text-gray-200">
-              Ustalar ve Hizmetler
-            </Link>
-            <Link href="/tutoring" className="text-white text-sm hover:text-gray-200">
-              Özel Ders Verenler
-            </Link>
-            <Link href="/jobs" className="text-white text-sm hover:text-gray-200">
-              İş İlanları
-            </Link>
+            {navigationLinks.map((link) => (
+              <Link 
+                key={link.path}
+                href={link.path} 
+                className="text-white text-sm hover:text-gray-200"
+              >
+                {link.title}
+              </Link>
+            ))}
           </Box>
         </Box>
       </Container>

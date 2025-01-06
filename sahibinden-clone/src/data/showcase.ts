@@ -5,7 +5,7 @@ export const realEstateShowcase = [
     price: "12,500,000 TL",
     location: "Istanbul",
     date: "Today",
-    image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Crect width='400' height='300' fill='%23cccccc'/%3E%3C/svg%3E"
+    image: "https://placehold.co/400x300?text=Luxury+Apartment"
   },
   {
     id: 2,

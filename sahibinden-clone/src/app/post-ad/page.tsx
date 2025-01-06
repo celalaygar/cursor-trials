@@ -12,71 +12,9 @@ import PetsIcon from '@mui/icons-material/Pets'
 import HelpIcon from '@mui/icons-material/Help'
 import Header from '@/components/Header'
 import ClientProvider from '@/components/ClientProvider'
+import { categories } from '@/data/categories'
 
 export default function PostAd() {
-  const categories = [
-    {
-      id: 1,
-      name: 'Emlak',
-      icon: <HomeIcon className="text-[#ff8a00]" />,
-      borderColor: 'border-t-[#ff8a00]'
-    },
-    {
-      id: 2,
-      name: 'Vasıta',
-      icon: <DirectionsCarIcon className="text-[#ff0034]" />,
-      borderColor: 'border-t-[#ff0034]'
-    },
-    {
-      id: 3,
-      name: 'Yedek Parça, Aksesuar,\nDonanım & Tuning',
-      icon: <BuildIcon className="text-[#00c9d6]" />,
-      borderColor: 'border-t-[#00c9d6]'
-    },
-    {
-      id: 4,
-      name: 'İkinci El ve\nSıfır Alışveriş',
-      icon: <ShoppingCartIcon className="text-[#7040ff]" />,
-      borderColor: 'border-t-[#7040ff]'
-    },
-    {
-      id: 5,
-      name: 'İş Makineleri\n& Sanayi',
-      icon: <ConstructionIcon className="text-[#a600ff]" />,
-      borderColor: 'border-t-[#a600ff]'
-    },
-    {
-      id: 6,
-      name: 'Ustalar ve\nHizmetler',
-      icon: <HandymanIcon className="text-[#00b0ff]" />,
-      borderColor: 'border-t-[#00b0ff]'
-    },
-    {
-      id: 7,
-      name: 'Özel Ders\nVerenler',
-      icon: <SchoolIcon className="text-[#2bb673]" />,
-      borderColor: 'border-t-[#2bb673]'
-    },
-    {
-      id: 8,
-      name: 'İş\nİlanları',
-      icon: <WorkIcon className="text-[#91c504]" />,
-      borderColor: 'border-t-[#91c504]'
-    },
-    {
-      id: 9,
-      name: 'Hayvanlar\nAlemi',
-      icon: <PetsIcon className="text-[#00c9d6]" />,
-      borderColor: 'border-t-[#00c9d6]'
-    },
-    {
-      id: 10,
-      name: 'Yardımcı\nArayanlar',
-      icon: <HelpIcon className="text-[#ff6f00]" />,
-      borderColor: 'border-t-[#ff6f00]'
-    }
-  ]
-
   return (
     <Box>
       <ClientProvider>
