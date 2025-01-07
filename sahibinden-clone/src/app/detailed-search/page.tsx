@@ -1,10 +1,37 @@
 'use client'
 import { Box, Container, Grid, Typography, TextField, Select, MenuItem, FormControlLabel, Checkbox, Button } from '@mui/material'
+import { useState } from 'react'
 import Header from '@/components/Header'
-import { categories } from '@/data/categories'
 import { mainPageItems } from '@/data/mainPage'
+import { searchCategories, cities, districts, datePeriods, sortOptions } from '@/data/detailedSearch'
 
 export default function DetailedSearch() {
+  const [selectedCity, setSelectedCity] = useState('')
+  const [formData, setFormData] = useState({
+    category: '',
+    city: '',
+    district: '',
+    datePeriod: '',
+    keyword: '',
+    includeDescription: false,
+    sortBy: 'price-desc',
+    showMapOnly: false
+  })
+
+  const handleChange = (field: string) => (event: any) => {
+    const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value
+    setFormData(prev => ({ ...prev, [field]: value }))
+
+    if (field === 'city') {
+      setSelectedCity(value)
+      setFormData(prev => ({ ...prev, district: '' }))
+    }
+  }
+
+  const handleSearch = () => {
+    console.log('Search with:', formData)
+  }
+
   return (
     <Box>
       <Header />
@@ -24,18 +51,14 @@ export default function DetailedSearch() {
                   <Select
                     fullWidth
                     size="small"
-                    defaultValue=""
+                    value={formData.category}
+                    onChange={handleChange('category')}
                   >
-                    <MenuItem value="">Tümü</MenuItem>
-                    <MenuItem value="emlak">Emlak</MenuItem>
-                    <MenuItem value="vasita">Vasıta</MenuItem>
-                    <MenuItem value="yedek-parca">Yedek Parça, Aksesuar...</MenuItem>
-                    <MenuItem value="ikinci-el">İkinci El ve Sıfır Al.</MenuItem>
-                    <MenuItem value="is-makineleri">İş Makineleri & Sanayi</MenuItem>
-                    <MenuItem value="ustalar">Özel Ders Verenler</MenuItem>
-                    <MenuItem value="ozel-ders">İş İlanları</MenuItem>
-                    <MenuItem value="is-ilanlari">Hayvanlar Alemi</MenuItem>
-                    <MenuItem value="hayvanlar">Yardımcı Arayanlar</MenuItem>
+                    {searchCategories.map(category => (
+                      <MenuItem key={category.value} value={category.value}>
+                        {category.label}
+                      </MenuItem>
+                    ))}
                   </Select>
                 </Box>
 
@@ -47,26 +70,30 @@ export default function DetailedSearch() {
                       <Select
                         fullWidth
                         size="small"
-                        defaultValue=""
+                        value={formData.city}
+                        onChange={handleChange('city')}
                         displayEmpty
                       >
-                        <MenuItem value="">İl</MenuItem>
-                        <MenuItem value="istanbul">İstanbul</MenuItem>
-                        <MenuItem value="ankara">Ankara</MenuItem>
-                        <MenuItem value="izmir">İzmir</MenuItem>
+                        {cities.map(city => (
+                          <MenuItem key={city.value} value={city.value}>
+                            {city.label}
+                          </MenuItem>
+                        ))}
                       </Select>
                     </Grid>
                     <Grid item xs={12} sm={6}>
                       <Select
                         fullWidth
                         size="small"
-                        defaultValue=""
+                        value={formData.district}
+                        onChange={handleChange('district')}
                         displayEmpty
                       >
-                        <MenuItem value="">İlçe</MenuItem>
-                        <MenuItem value="kadikoy">Kadıköy</MenuItem>
-                        <MenuItem value="besiktas">Beşiktaş</MenuItem>
-                        <MenuItem value="sisli">Şişli</MenuItem>
+                        {(selectedCity && districts[selectedCity as keyof typeof districts] || [{ value: '', label: 'İlçe' }]).map(district => (
+                          <MenuItem key={district.value} value={district.value}>
+                            {district.label}
+                          </MenuItem>
+                        ))}
                       </Select>
                     </Grid>
                   </Grid>
@@ -78,13 +105,15 @@ export default function DetailedSearch() {
                   <Select
                     fullWidth
                     size="small"
-                    defaultValue=""
+                    value={formData.datePeriod}
+                    onChange={handleChange('datePeriod')}
                     displayEmpty
                   >
-                    <MenuItem value="">Tümü</MenuItem>
-                    <MenuItem value="today">Bugün</MenuItem>
-                    <MenuItem value="last-week">Son 1 Hafta</MenuItem>
-                    <MenuItem value="last-month">Son 1 Ay</MenuItem>
+                    {datePeriods.map(period => (
+                      <MenuItem key={period.value} value={period.value}>
+                        {period.label}
+                      </MenuItem>
+                    ))}
                   </Select>
                 </Box>
 
@@ -94,10 +123,18 @@ export default function DetailedSearch() {
                   <TextField
                     fullWidth
                     size="small"
+                    value={formData.keyword}
+                    onChange={handleChange('keyword')}
                     placeholder="Kelime, ilan no veya mağaza adı ile ara"
                   />
                   <FormControlLabel
-                    control={<Checkbox size="small" />}
+                    control={
+                      <Checkbox 
+                        size="small"
+                        checked={formData.includeDescription}
+                        onChange={handleChange('includeDescription')}
+                      />
+                    }
                     label={<Typography className="text-sm">İlan açıklamalarını dahil et</Typography>}
                   />
                 </Box>
@@ -108,19 +145,27 @@ export default function DetailedSearch() {
                   <Select
                     fullWidth
                     size="small"
-                    defaultValue="price-desc"
+                    value={formData.sortBy}
+                    onChange={handleChange('sortBy')}
                   >
-                    <MenuItem value="price-desc">Fiyata göre (Önce en yüksek)</MenuItem>
-                    <MenuItem value="price-asc">Fiyata göre (Önce en düşük)</MenuItem>
-                    <MenuItem value="date-desc">Tarihe göre (Önce en yeni)</MenuItem>
-                    <MenuItem value="date-asc">Tarihe göre (Önce en eski)</MenuItem>
+                    {sortOptions.map(option => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
                   </Select>
                 </Box>
 
                 {/* Haritali İlanlar */}
                 <Box>
                   <FormControlLabel
-                    control={<Checkbox size="small" />}
+                    control={
+                      <Checkbox 
+                        size="small"
+                        checked={formData.showMapOnly}
+                        onChange={handleChange('showMapOnly')}
+                      />
+                    }
                     label={<Typography className="text-sm">Haritalı İlanlar</Typography>}
                   />
                 </Box>
@@ -131,6 +176,7 @@ export default function DetailedSearch() {
                     variant="contained"
                     fullWidth
                     className="bg-[#489ae9] hover:bg-[#3d83c7]"
+                    onClick={handleSearch}
                   >
                     Arama Yap
                   </Button>
