@@ -199,14 +199,16 @@ export default function DetailedSearch() {
 
               <Box className="p-3">
                 <Grid container spacing={2}>
-                  {mainPageItems.slice(0, 10).map((item) => (
-                    <Grid item xs={12} key={item.id}>
-                      <Box className="border border-[#dfdfdf] hover:shadow-md transition-shadow cursor-pointer">
-                        <img 
-                          src={item.image} 
-                          alt={item.title} 
-                          className="w-full h-[120px] object-cover"
-                        />
+                  {mainPageItems.slice(0, 10).map((item, index) => (
+                    <Grid item xs={6} key={item.id}>
+                      <Box className="border border-[#dfdfdf] hover:shadow-md transition-shadow cursor-pointer h-full">
+                        <Box className="relative pt-[75%]"> {/* 4:3 aspect ratio */}
+                          <img 
+                            src={item.image} 
+                            alt={item.title} 
+                            className="absolute top-0 left-0 w-full h-full object-cover"
+                          />
+                        </Box>
                         <Box className="p-2">
                           <Typography 
                             className="text-xs text-[#333] line-clamp-2 min-h-[32px]"
@@ -217,11 +219,11 @@ export default function DetailedSearch() {
                           <Typography className="text-xs font-semibold text-[#333] mt-1">
                             {item.price}
                           </Typography>
-                          <Box className="flex justify-between mt-1">
-                            <Typography className="text-xs text-[#666]">
+                          <Box className="flex flex-col mt-1">
+                            <Typography className="text-[10px] text-[#666]">
                               {item.location}
                             </Typography>
-                            <Typography className="text-xs text-[#666]">
+                            <Typography className="text-[10px] text-[#666]">
                               {item.date}
                             </Typography>
                           </Box>
