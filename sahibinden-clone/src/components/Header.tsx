@@ -1,15 +1,15 @@
 'use client'
-import { 
-  Box, 
-  Container, 
-  InputBase, 
-  Button, 
+import {
+  Box,
+  Container,
+  InputBase,
+  Button,
   IconButton,
   Popover,
   Typography,
   Avatar,
   Tabs,
-  Tab 
+  Tab
 } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import Image from 'next/image'
@@ -51,23 +51,28 @@ export default function Header() {
 
           {/* Search */}
           <Box className="flex-grow flex gap-2">
-            <Box className="flex-grow max-w-2xl flex">
+            <Box className="flex-grow max-w-xl flex">
               <InputBase
                 placeholder="Kelime, ilan no veya mağaza adı ile ara"
-                className="flex-grow bg-[#1c2938] text-white px-3 py-1 text-sm rounded-l"
+                className="flex-grow bg-[#1c2938] text-black bg-gray-200 px-3 py-1 text-sm rounded-l"
               />
+              <div className="bg-[#696d9b]">
+                <Button
+                  className="h-full hover:bg-[#6c8d9c] text-white min-w-[40px] rounded-r"
+                >
+                  <SearchIcon className="text-white" />
+                </Button>
+              </div>
+            </Box>
+            <Box >
               <Button
-                className="bg-[#1c2938] hover:bg-[#273b54] text-white min-w-[40px] rounded-r"
+                variant="text"
+                className="text-gray-300 text-sm normal-case hover:text-gray-200"
+                onClick={() => router.push('/detailed-search')}
               >
-                <SearchIcon />
+                Detaylı Arama
               </Button>
             </Box>
-            <Button
-              variant="text"
-              className="text-white text-sm normal-case hover:text-gray-200"
-            >
-              Detaylı Arama
-            </Button>
           </Box>
 
           {/* Right Menu */}
@@ -101,22 +106,22 @@ export default function Header() {
               }}
             >
               <Box className="w-[500px]">
-                <Tabs 
-                  value={activeTab} 
+                <Tabs
+                  value={activeTab}
                   onChange={(e, newValue) => setActiveTab(newValue)}
                   variant="fullWidth"
                   className="border-b border-gray-200"
                 >
-                  <Tab 
-                    label="Mesajlarım" 
+                  <Tab
+                    label="Mesajlarım"
                     className={`normal-case ${activeTab === 0 ? 'text-blue-600' : ''}`}
                   />
-                  <Tab 
-                    label="Bilgilendirmeler" 
+                  <Tab
+                    label="Bilgilendirmeler"
                     className={`normal-case ${activeTab === 1 ? 'text-blue-600' : ''}`}
                   />
-                  <Tab 
-                    label="Ürün Tekliflerim" 
+                  <Tab
+                    label="Ürün Tekliflerim"
                     className={`normal-case ${activeTab === 2 ? 'text-blue-600' : ''}`}
                   />
                 </Tabs>
@@ -140,9 +145,9 @@ export default function Header() {
                           </Box>
                         </Box>
                       ))}
-                      <Button 
-                        fullWidth 
-                        variant="text" 
+                      <Button
+                        fullWidth
+                        variant="text"
                         className="mt-2 text-sm normal-case text-blue-600"
                         onClick={() => router.push('/messages')}
                       >
@@ -183,9 +188,9 @@ export default function Header() {
         <Box className="flex items-center h-10 border-t border-[#455873]">
           <Box className="flex gap-6">
             {navigationLinks.map((link) => (
-              <Link 
+              <Link
                 key={link.path}
-                href={link.path} 
+                href={link.path}
                 className="text-white text-sm hover:text-gray-200"
               >
                 {link.title}
