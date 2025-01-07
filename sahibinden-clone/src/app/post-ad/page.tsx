@@ -1,15 +1,5 @@
 'use client'
 import { Box, Container, Typography, TextField } from '@mui/material'
-import HomeIcon from '@mui/icons-material/Home'
-import DirectionsCarIcon from '@mui/icons-material/DirectionsCar'
-import BuildIcon from '@mui/icons-material/Build'
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
-import ConstructionIcon from '@mui/icons-material/Construction'
-import HandymanIcon from '@mui/icons-material/Handyman'
-import SchoolIcon from '@mui/icons-material/School'
-import WorkIcon from '@mui/icons-material/Work'
-import PetsIcon from '@mui/icons-material/Pets'
-import HelpIcon from '@mui/icons-material/Help'
 import Header from '@/components/Header'
 import ClientProvider from '@/components/ClientProvider'
 import { categories } from '@/data/categories'
@@ -38,24 +28,27 @@ export default function PostAd() {
 
             {/* Kategoriler Grid */}
             <Box className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-3">
-              {categories.map((category) => (
-                <Box
-                  key={category.id}
-                  className={`p-3 md:p-4 border-t-4 ${category.borderColor} bg-white rounded shadow-sm hover:shadow-md transition-shadow cursor-pointer`}
-                >
-                  <Box className="flex flex-col items-center text-center gap-2">
-                    <Box className="text-2xl md:text-3xl">
-                      {category.icon}
+              {categories.map((category) => {
+                const Icon = category.IconComponent
+                return (
+                  <Box
+                    key={category.id}
+                    className={`p-3 md:p-4 border-t-4 ${category.borderColor} bg-white rounded shadow-sm hover:shadow-md transition-shadow cursor-pointer`}
+                  >
+                    <Box className="flex flex-col items-center text-center gap-2">
+                      <Box className="text-2xl md:text-3xl">
+                        <Icon style={{ color: category.iconColor }} />
+                      </Box>
+                      <Typography 
+                        variant="body2" 
+                        className="whitespace-pre-line text-xs md:text-sm font-medium"
+                      >
+                        {category.name}
+                      </Typography>
                     </Box>
-                    <Typography 
-                      variant="body2" 
-                      className="whitespace-pre-line text-xs md:text-sm font-medium"
-                    >
-                      {category.name}
-                    </Typography>
                   </Box>
-                </Box>
-              ))}
+                )
+              })}
             </Box>
 
             {/* Alt Arama Bölümü */}
