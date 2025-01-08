@@ -14,10 +14,7 @@ export default function SVehicle() {
           </Grid>
           <Grid item xs={12} md={9}>
             <Box className="bg-white border border-[#dfdfdf] p-4">
-              <Box className="flex items-center gap-2">
-                <Typography variant="h6">S-Aracım</Typography>
-                <Chip label="yeni" size="small" className="bg-[#e11f21] text-white" />
-              </Box>
+              <Typography variant="h6">S-Aracım</Typography>
             </Box>
           </Grid>
         </Grid>
