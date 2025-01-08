@@ -22,10 +22,15 @@ import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import { messages } from '@/data/messages'
 import { navigationLinks } from '@/data/navigation'
+import MessagesPopover from './header/MessagesPopover'
+import NotificationsPopover from './header/NotificationsPopover'
+import FavoritesPopover from './header/FavoritesPopover'
 
 export default function Header() {
   const router = useRouter()
   const [messagesAnchorEl, setMessagesAnchorEl] = useState<null | HTMLElement>(null)
+  const [notificationsAnchorEl, setNotificationsAnchorEl] = useState<null | HTMLElement>(null)
+  const [favoritesAnchorEl, setFavoritesAnchorEl] = useState<null | HTMLElement>(null)
   const [activeTab, setActiveTab] = useState(0)
   const [mounted, setMounted] = useState(false)
 
@@ -105,7 +110,10 @@ export default function Header() {
               </IconButton>
 
               {/* Bildirimler */}
-              <IconButton className="p-1">
+              <IconButton 
+                className="p-1"
+                onClick={(e) => setNotificationsAnchorEl(e.currentTarget)}
+              >
                 <Badge badgeContent={2} color="error">
                   <NotificationsIcon 
                     fontSize="small" 
@@ -115,7 +123,10 @@ export default function Header() {
               </IconButton>
 
               {/* Favoriler */}
-              <IconButton className="p-1">
+              <IconButton 
+                className="p-1"
+                onClick={(e) => setFavoritesAnchorEl(e.currentTarget)}
+              >
                 <StarBorderIcon 
                   fontSize="small" 
                   className="text-gray-200 hover:text-white transition-colors"
@@ -123,7 +134,7 @@ export default function Header() {
               </IconButton>
             </Box>
 
-            {/* Mesajlar Popover - aynı kalacak */}
+            {/* Mesajlar Popover */}
             <Popover
               id="messages-popover"
               open={Boolean(messagesAnchorEl)}
@@ -138,74 +149,51 @@ export default function Header() {
                 horizontal: 'right',
               }}
             >
-              <Box className="w-[500px]">
-                <Tabs
-                  value={activeTab}
-                  onChange={(e, newValue) => setActiveTab(newValue)}
-                  variant="fullWidth"
-                  className="border-b border-gray-200"
-                >
-                  <Tab
-                    label="Mesajlarım"
-                    className={`normal-case ${activeTab === 0 ? 'text-blue-600' : ''}`}
-                  />
-                  <Tab
-                    label="Bilgilendirmeler"
-                    className={`normal-case ${activeTab === 1 ? 'text-blue-600' : ''}`}
-                  />
-                  <Tab
-                    label="Ürün Tekliflerim"
-                    className={`normal-case ${activeTab === 2 ? 'text-blue-600' : ''}`}
-                  />
-                </Tabs>
+              <MessagesPopover 
+                activeTab={activeTab}
+                onTabChange={(e, newValue) => setActiveTab(newValue)}
+                onClose={() => setMessagesAnchorEl(null)}
+              />
+            </Popover>
 
-                <Box className="p-4">
-                  {activeTab === 0 && (
-                    <Box className="divide-y">
-                      {messages.map((item, index) => (
-                        <Box key={index} className="py-3 flex gap-3 cursor-pointer hover:bg-gray-50">
-                          <Avatar className="w-10 h-10" />
-                          <Box className="flex-grow">
-                            <Typography variant="body2" className="text-blue-600 mb-1">
-                              {item.sender}
-                            </Typography>
-                            <Typography variant="body2" className="font-normal">
-                              {item.message}
-                            </Typography>
-                            <Typography variant="caption" className="text-gray-500">
-                              {item.date}
-                            </Typography>
-                          </Box>
-                        </Box>
-                      ))}
-                      <Button
-                        fullWidth
-                        variant="text"
-                        className="mt-2 text-sm normal-case text-blue-600"
-                        onClick={() => router.push('/messages')}
-                      >
-                        Tümünü Gör
-                      </Button>
-                    </Box>
-                  )}
+            {/* Bildirimler Popover */}
+            <Popover
+              id="notifications-popover"
+              open={Boolean(notificationsAnchorEl)}
+              anchorEl={notificationsAnchorEl}
+              onClose={() => setNotificationsAnchorEl(null)}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+            >
+              <NotificationsPopover 
+                onClose={() => setNotificationsAnchorEl(null)}
+              />
+            </Popover>
 
-                  {activeTab === 1 && (
-                    <Box className="divide-y">
-                      <Typography variant="body2" className="py-4 text-center text-gray-500">
-                        Bilgilendirme mesajınız bulunmamaktadır.
-                      </Typography>
-                    </Box>
-                  )}
-
-                  {activeTab === 2 && (
-                    <Box className="divide-y">
-                      <Typography variant="body2" className="py-4 text-center text-gray-500">
-                        Ürün teklifi mesajınız bulunmamaktadır.
-                      </Typography>
-                    </Box>
-                  )}
-                </Box>
-              </Box>
+            {/* Favoriler Popover */}
+            <Popover
+              id="favorites-popover"
+              open={Boolean(favoritesAnchorEl)}
+              anchorEl={favoritesAnchorEl}
+              onClose={() => setFavoritesAnchorEl(null)}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+            >
+              <FavoritesPopover 
+                onClose={() => setFavoritesAnchorEl(null)}
+              />
             </Popover>
 
             <Button
