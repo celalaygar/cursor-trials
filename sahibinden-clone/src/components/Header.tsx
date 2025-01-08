@@ -9,9 +9,13 @@ import {
   Typography,
   Avatar,
   Tabs,
-  Tab
+  Tab,
+  Badge
 } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
+import EmailIcon from '@mui/icons-material/Email'
+import NotificationsIcon from '@mui/icons-material/Notifications'
+import StarBorderIcon from '@mui/icons-material/StarBorder'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -84,13 +88,42 @@ export default function Header() {
             <Link href="/register" className="text-white text-sm hover:text-gray-200">
               Hesap Aç
             </Link>
-            <Button
-              variant="contained"
-              className="bg-[#489ae9] hover:bg-[#3d83c7] normal-case ml-2"
-              onClick={(e) => setMessagesAnchorEl(e.currentTarget)}
-            >
-              Mesajlarım
-            </Button>
+
+            {/* İkonlar */}
+            <Box className="flex items-center gap-2 ml-2">
+              {/* Mesajlar */}
+              <IconButton
+                onClick={(e) => setMessagesAnchorEl(e.currentTarget)}
+                className="p-1"
+              >
+                <Badge badgeContent={1} color="error">
+                  <EmailIcon 
+                    fontSize="small" 
+                    className="text-gray-200 hover:text-white transition-colors"
+                  />
+                </Badge>
+              </IconButton>
+
+              {/* Bildirimler */}
+              <IconButton className="p-1">
+                <Badge badgeContent={2} color="error">
+                  <NotificationsIcon 
+                    fontSize="small" 
+                    className="text-gray-200 hover:text-white transition-colors"
+                  />
+                </Badge>
+              </IconButton>
+
+              {/* Favoriler */}
+              <IconButton className="p-1">
+                <StarBorderIcon 
+                  fontSize="small" 
+                  className="text-gray-200 hover:text-white transition-colors"
+                />
+              </IconButton>
+            </Box>
+
+            {/* Mesajlar Popover - aynı kalacak */}
             <Popover
               id="messages-popover"
               open={Boolean(messagesAnchorEl)}
@@ -174,6 +207,7 @@ export default function Header() {
                 </Box>
               </Box>
             </Popover>
+
             <Button
               variant="contained"
               className="bg-[#489ae9] hover:bg-[#3d83c7] normal-case"
