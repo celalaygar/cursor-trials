@@ -16,6 +16,7 @@ import SearchIcon from '@mui/icons-material/Search'
 import EmailIcon from '@mui/icons-material/Email'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 import StarBorderIcon from '@mui/icons-material/StarBorder'
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -25,12 +26,14 @@ import { navigationLinks } from '@/data/navigation'
 import MessagesPopover from './header/MessagesPopover'
 import NotificationsPopover from './header/NotificationsPopover'
 import FavoritesPopover from './header/FavoritesPopover'
+import UserPopover from './header/UserPopover'
 
 export default function Header() {
   const router = useRouter()
   const [messagesAnchorEl, setMessagesAnchorEl] = useState<null | HTMLElement>(null)
   const [notificationsAnchorEl, setNotificationsAnchorEl] = useState<null | HTMLElement>(null)
   const [favoritesAnchorEl, setFavoritesAnchorEl] = useState<null | HTMLElement>(null)
+  const [userAnchorEl, setUserAnchorEl] = useState<null | HTMLElement>(null)
   const [activeTab, setActiveTab] = useState(0)
   const [mounted, setMounted] = useState(false)
 
@@ -60,7 +63,7 @@ export default function Header() {
 
           {/* Search */}
           <Box className="flex-grow flex gap-2">
-            <Box className="flex-grow max-w-xl flex">
+            <Box className="flex-grow max-w-md flex">
               <InputBase
                 placeholder="Kelime, ilan no veya mağaza adı ile ara"
                 className="flex-grow bg-[#1c2938] text-black bg-gray-200 px-3 py-1 text-sm rounded-l"
@@ -96,39 +99,50 @@ export default function Header() {
 
             {/* İkonlar */}
             <Box className="flex items-center gap-2 ml-2">
+              {/* Kullanıcı */}
+              <IconButton
+                onClick={(e) => setUserAnchorEl(e.currentTarget)}
+                className="p-1"
+              >
+                <PersonOutlineIcon
+                  fontSize="small"
+                  className="text-gray-200 hover:text-white transition-colors"
+                />
+              </IconButton>
+
               {/* Mesajlar */}
               <IconButton
                 onClick={(e) => setMessagesAnchorEl(e.currentTarget)}
                 className="p-1"
               >
                 <Badge badgeContent={1} color="error">
-                  <EmailIcon 
-                    fontSize="small" 
+                  <EmailIcon
+                    fontSize="small"
                     className="text-gray-200 hover:text-white transition-colors"
                   />
                 </Badge>
               </IconButton>
 
               {/* Bildirimler */}
-              <IconButton 
+              <IconButton
                 className="p-1"
                 onClick={(e) => setNotificationsAnchorEl(e.currentTarget)}
               >
                 <Badge badgeContent={2} color="error">
-                  <NotificationsIcon 
-                    fontSize="small" 
+                  <NotificationsIcon
+                    fontSize="small"
                     className="text-gray-200 hover:text-white transition-colors"
                   />
                 </Badge>
               </IconButton>
 
               {/* Favoriler */}
-              <IconButton 
+              <IconButton
                 className="p-1"
                 onClick={(e) => setFavoritesAnchorEl(e.currentTarget)}
               >
-                <StarBorderIcon 
-                  fontSize="small" 
+                <StarBorderIcon
+                  fontSize="small"
                   className="text-gray-200 hover:text-white transition-colors"
                 />
               </IconButton>
@@ -149,7 +163,7 @@ export default function Header() {
                 horizontal: 'right',
               }}
             >
-              <MessagesPopover 
+              <MessagesPopover
                 activeTab={activeTab}
                 onTabChange={(e, newValue) => setActiveTab(newValue)}
                 onClose={() => setMessagesAnchorEl(null)}
@@ -171,7 +185,7 @@ export default function Header() {
                 horizontal: 'right',
               }}
             >
-              <NotificationsPopover 
+              <NotificationsPopover
                 onClose={() => setNotificationsAnchorEl(null)}
               />
             </Popover>
@@ -191,8 +205,28 @@ export default function Header() {
                 horizontal: 'right',
               }}
             >
-              <FavoritesPopover 
+              <FavoritesPopover
                 onClose={() => setFavoritesAnchorEl(null)}
+              />
+            </Popover>
+
+            {/* Kullanıcı Popover */}
+            <Popover
+              id="user-popover"
+              open={Boolean(userAnchorEl)}
+              anchorEl={userAnchorEl}
+              onClose={() => setUserAnchorEl(null)}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+            >
+              <UserPopover
+                onClose={() => setUserAnchorEl(null)}
               />
             </Popover>
 
